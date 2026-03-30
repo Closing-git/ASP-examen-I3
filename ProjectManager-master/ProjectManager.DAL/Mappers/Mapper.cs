@@ -17,10 +17,10 @@ namespace ProjectManager.DAL.Mappers
             return new Employee()
             {
                 EmployeeId = (Guid)record[nameof(Employee.EmployeeId)],
-                Firstname = (string)record[nameof(Employee.FirstName)],
-                Lastname = (string)record[nameof(Employee.LastName)],
-                IsProjectManager = (bool)record[nameof(Employee.IsProjectManager)],
-                Hiredate = (DateTime)record[nameof(Employee.HireDate)]
+                FirstName = (string)record["Firstname"],
+                LastName = (string)record["Lastname"],
+                IsProjectManager = (bool)record["IsProjectManager"],
+                HireDate = (DateTime)record["Hiredate"]
             };
         }
 
