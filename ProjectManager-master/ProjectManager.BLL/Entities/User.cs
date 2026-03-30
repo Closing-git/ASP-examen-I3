@@ -36,9 +36,17 @@ namespace ProjectManager.BLL.Entities
         public Guid EmployeeId { get; private set; }
 
 
-        public User( string email, string password, Guid employeeId)
+        public User(string email, string password, Guid employeeId)
         {
             UserId = Guid.NewGuid();
+            Email = email;
+            Password = password;
+            EmployeeId = employeeId;
+        }
+
+        public User(Guid userId, string email, string password, Guid employeeId)
+        {
+            UserId = userId;
             Email = email;
             Password = password;
             EmployeeId = employeeId;
