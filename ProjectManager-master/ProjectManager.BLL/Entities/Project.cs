@@ -33,7 +33,7 @@ namespace ProjectManager.BLL.Entities
         public DateTime CreationDate { get; private set; }
         public Guid ProjectManagerId { get; private set; }
 
-        public Project(string name, string description Guid projectManagerId)
+        public Project(string name, string description, Guid projectManagerId)
         {
             ProjectId = Guid.NewGuid();
             Name = name;

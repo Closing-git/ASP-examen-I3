@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.DAL.Services
 {
-    internal class EmployeeService : IEmployeeRepository<Employee>
+    public class EmployeeService : IEmployeeRepository<Employee>
     {
 
         private readonly SqlConnection _connection;

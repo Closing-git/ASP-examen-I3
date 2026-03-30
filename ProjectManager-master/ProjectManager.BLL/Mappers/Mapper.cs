@@ -135,8 +135,7 @@ namespace ProjectManager.BLL.Mappers
             if (entity is null) throw new ArgumentNullException(nameof(entity));
             BLL.Entities.TakePart takePart = new BLL.Entities.TakePart(
                 entity.EmployeeId,
-                entity.ProjectId,
-                entity.StartDate
+                entity.ProjectId
                 );
             return takePart;
         }

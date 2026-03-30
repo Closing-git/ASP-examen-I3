@@ -13,14 +13,14 @@ namespace ProjectManager.BLL.Entities
         public Guid ProjectId { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime? EndDate { get; private set; }
-        public TakePart(Guid employeeId, Guid projectId, DateTime startDate)
+        public TakePart(Guid employeeId, Guid projectId)
         {
             EmployeeId = employeeId;
             ProjectId = projectId;
             StartDate = DateTime.Now;
         }
 
-        public TakePart(Guid employeeId, Guid projectId, DateTime startDate, DateTime? endDate) : this(employeeId, projectId, startDate)
+        public TakePart(Guid employeeId, Guid projectId, DateTime startDate, DateTime? endDate) : this(employeeId, projectId)
         {
             EndDate = endDate;
         }
