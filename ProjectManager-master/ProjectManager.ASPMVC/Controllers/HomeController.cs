@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ProjectManager.ASPMVC.Handlers.Filters;
 using ProjectManager.ASPMVC.Models;
 using System.Diagnostics;
 
@@ -13,6 +14,7 @@ namespace ProjectManager.ASPMVC.Controllers
             _logger = logger;
         }
 
+        [TypeFilter<RequiredAuthenticationFilter>]
         public IActionResult Index()
         {
             return View();

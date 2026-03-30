@@ -22,6 +22,21 @@ namespace ProjectManager.ASPMVC.Handlers
                 else _session.SetString(nameof(UserId), JsonSerializer.Serialize(value));
             }
         }
+
+        public Guid? EmployeeId
+        {
+            get
+            {
+                return JsonSerializer.Deserialize<Guid?>(_session.GetString(nameof(EmployeeId)) ?? "null");
+            }
+            set
+            {
+                if (value is null) _session.Remove(nameof(EmployeeId));
+                else _session.SetString(nameof(EmployeeId), JsonSerializer.Serialize(value));
+            }
+        }
+
+
     }
 }
 
