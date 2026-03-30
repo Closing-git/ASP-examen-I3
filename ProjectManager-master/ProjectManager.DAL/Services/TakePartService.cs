@@ -60,7 +60,7 @@ namespace ProjectManager.DAL.Services
             throw new NotImplementedException();
         }
 
-        public void setEnd(Guid employeeId, Guid projectId, DateTime endTime)
+        public void SetEnd(Guid employeeId, Guid projectId, DateTime endTime)
         {
 
             using (SqlCommand command = _connection.CreateCommand())

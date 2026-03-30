@@ -8,6 +8,6 @@ namespace ProjectManager.Common.Repositories
 {
     public interface ITakePartRepository<TTakePart> : ICRUDRepository<TTakePart, Guid>
     {
-        public void setEnd(Guid employeeId, Guid projectId, DateTime endTime);
+        public void SetEnd(Guid employeeId, Guid projectId, DateTime endTime);
     }
 }

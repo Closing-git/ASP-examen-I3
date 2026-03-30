@@ -17,10 +17,10 @@ namespace ProjectManager.DAL.Mappers
             return new Employee()
             {
                 EmployeeId = (Guid)record[nameof(Employee.EmployeeId)],
-                FirstName = (string)record[nameof(Employee.FirstName)],
-                LastName = (string)record[nameof(Employee.LastName)],
+                Firstname = (string)record[nameof(Employee.FirstName)],
+                Lastname = (string)record[nameof(Employee.LastName)],
                 IsProjectManager = (bool)record[nameof(Employee.IsProjectManager)],
-                HireDate = (DateTime)record[nameof(Employee.HireDate)]
+                Hiredate = (DateTime)record[nameof(Employee.HireDate)]
             };
         }
 
@@ -33,7 +33,7 @@ namespace ProjectManager.DAL.Mappers
                 Subject = (string)record[nameof(Post.Subject)],
                 Content = (string)record[nameof(Post.Content)],
                 SendDate = (DateTime)record[nameof(Post.SendDate)],
-                AuthorId = (Guid)record[nameof(Post.AuthorId)],
+                EmployeeId = (Guid)record[nameof(Post.EmployeeId)],
                 ProjectId = (Guid)record[nameof(Post.ProjectId)]
             };
         }

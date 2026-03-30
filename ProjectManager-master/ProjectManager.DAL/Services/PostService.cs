@@ -28,7 +28,7 @@ namespace ProjectManager.DAL.Services
                 {
                     command.CommandText = "SP_Post_Insert";
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue(nameof(Post.AuthorId), entity.AuthorId);
+                    command.Parameters.AddWithValue(nameof(Post.EmployeeId), entity.EmployeeId);
                     command.Parameters.AddWithValue(nameof(Post.ProjectId), entity.ProjectId);
                     command.Parameters.AddWithValue(nameof(Post.Subject), entity.Subject);
                     command.Parameters.AddWithValue(nameof(Post.Content), entity.Content);

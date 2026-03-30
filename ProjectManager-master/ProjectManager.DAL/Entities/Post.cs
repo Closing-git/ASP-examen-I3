@@ -12,7 +12,7 @@ namespace ProjectManager.DAL.Entities
         public string Subject { get; set; }
         public string Content { get; set; }
         public DateTime SendDate { get; set; }
-        public Guid AuthorId { get; set; }
+        public Guid EmployeeId { get; set; }
         public Guid ProjectId { get; set; }
     }
 }
