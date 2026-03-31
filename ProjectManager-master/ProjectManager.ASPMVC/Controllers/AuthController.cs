@@ -12,12 +12,13 @@ namespace ProjectManager.ASPMVC.Controllers
 
         private readonly IUserRepository<BLL.Entities.User> _bllService;
         private readonly UserSessionManager _userSession;
+        private readonly IEmployeeRepository<BLL.Entities.Employee> _employeeService;
 
-        public AuthController(IUserRepository<BLL.Entities.User> bllService, UserSessionManager userSession)
+        public AuthController(IUserRepository<BLL.Entities.User> bllService, UserSessionManager userSession, IEmployeeRepository<BLL.Entities.Employee> employeeService)
         {
             _bllService = bllService;
             _userSession = userSession;
-
+            _employeeService = employeeService;
         }
 
 
@@ -43,7 +44,11 @@ namespace ProjectManager.ASPMVC.Controllers
                 if (!ModelState.IsValid) throw new InvalidOperationException("Le formulaire n'est pas valide.");
                 Guid employeeId = _bllService.CheckPassword(form.Email, form.Password);
                 _userSession.EmployeeId = employeeId;
-
+                _userSession.UserName = $"{_employeeService.Get(employeeId).FirstName} {_employeeService.Get(employeeId).LastName}";
+                if (_employeeService.Get(employeeId).IsProjectManager)
+                {
+                    _userSession.IsProjectManager = true;
+                }
 
                 return RedirectToAction("Index", "Home");
             }

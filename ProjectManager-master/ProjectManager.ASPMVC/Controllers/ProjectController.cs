@@ -31,15 +31,30 @@ namespace ProjectManager.ASPMVC.Controllers
         {
             Guid employeeId = _userSession.EmployeeId.Value;
             bool isProjectManager = _employeeService.CheckIsProjectManager(employeeId);
-            IEnumerable<ListItemViewModel> model;
+            IEnumerable<Project> result;
+            List<ListItemViewModel> model = new List<ListItemViewModel>();
+
 
             if (isProjectManager)
             {
-                model = _bllService.GetByManagerId(employeeId).Select(bll => bll.ToListItem());
+                result = _bllService.GetByManagerId(employeeId);
             }
             else
             {
-                model = _bllService.GetByEmployeeId(employeeId).Select(bll => bll.ToListItem());
+                result = _bllService.GetByEmployeeId(employeeId);
+            }
+
+            foreach (var project in result)
+            {
+                var membersCount = _employeeService.GetByProjectId(project.ProjectId).Count();
+
+                model.Add(new ListItemViewModel
+                {
+                    ProjectId = project.ProjectId,
+                    Name = project.Name,
+                    Description = project.Description,
+                    nbMembers = membersCount
+                });
             }
 
             return View(model);
@@ -79,6 +94,8 @@ namespace ProjectManager.ASPMVC.Controllers
         public IActionResult Details(Guid id)
         {
             DetailsViewModel model = _bllService.Get(id).ToDetails();
+            model.ProjectManagerName = $"{_employeeService.Get(model.ManagerId).FirstName} {_employeeService.Get(model.ManagerId).LastName}";
+            model.Team = _employeeService.GetByProjectId(id).Select(e => $"{e.FirstName} {e.LastName}");
             return View(model);
         }
 

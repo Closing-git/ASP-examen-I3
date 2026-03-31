@@ -7,6 +7,9 @@ namespace ProjectManager.ASPMVC.Models.Project
     {
         [ScaffoldColumn(false)]
         public Guid ProjectId { get; set; }
+        [ScaffoldColumn(false)]
+        public Guid ManagerId { get; set; }
+
         [DisplayName("Nom du projet :")]
         public string Name { get; set; }
         [DisplayName("Description:")]

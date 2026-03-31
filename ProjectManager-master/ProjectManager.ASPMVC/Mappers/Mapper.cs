@@ -23,6 +23,7 @@ namespace ProjectManager.ASPMVC.Mappers
             return new Models.Project.DetailsViewModel()
             {
                 ProjectId = entity.ProjectId,
+                ManagerId = entity.ProjectManagerId,
                 Name = entity.Name,
                 Description = entity.Description,
                 CreationDate = entity.CreationDate.ToString("d"),

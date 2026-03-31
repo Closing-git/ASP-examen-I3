@@ -93,8 +93,11 @@ namespace ProjectManager.DAL.Services
             {
                 command.CommandText = "SP_Employee_Get_FromEmployeeId";
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue(nameof(id), id);
-                _connection.Open();
+                command.Parameters.AddWithValue("employeeId", id);
+                if (_connection.State != ConnectionState.Open)
+                {
+                    _connection.Open();
+                }
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
                     if (reader.Read())
