@@ -37,14 +37,15 @@ namespace ProjectManager.BLL.Services
             return _dalService.Get(id).ToBLL();
         }
 
-        public Project GetByEmployeeId(Guid employeeId)
+        public IEnumerable<Project> GetByEmployeeId(Guid employeeId)
         {
-            return _dalService.GetByEmployeeId(employeeId).ToBLL();
+            return _dalService.GetByEmployeeId(employeeId).Select(project => project.ToBLL());
+            
         }
 
-        public Project GetByManagerId(Guid managerId)
+        public IEnumerable<Project> GetByManagerId(Guid managerId)
         {
-            return _dalService.GetByManagerId(managerId).ToBLL();
+            return _dalService.GetByManagerId(managerId).Select(project=> project.ToBLL());
         }
 
         public void Update(Guid id, Project entity)

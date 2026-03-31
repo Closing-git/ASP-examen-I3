@@ -60,7 +60,8 @@ namespace ProjectManager.BLL.Services
 
         public Employee GetByUserId(Guid userId)
         {
-            return _dalService.Get(userId).ToBLL();
+            
+            return _dalService.GetByUserId(userId).ToBLL();
         }
 
         public void Update(Guid id, Employee entity)

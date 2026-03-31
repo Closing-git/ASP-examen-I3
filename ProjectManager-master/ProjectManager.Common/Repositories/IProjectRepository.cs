@@ -8,7 +8,7 @@ namespace ProjectManager.Common.Repositories
 {
     public interface IProjectRepository<TProject> : ICRUDRepository<TProject, Guid>
     {
-        public TProject GetByEmployeeId(Guid employeeId);
-        public TProject GetByManagerId(Guid managerId);
+        public IEnumerable<TProject> GetByEmployeeId(Guid employeeId);
+        public IEnumerable<TProject> GetByManagerId(Guid managerId);
     }
 }

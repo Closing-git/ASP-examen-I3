@@ -75,7 +75,7 @@ namespace ProjectManager.DAL.Services
             }
         }
 
-        public Project GetByEmployeeId(Guid employeeId)
+        public IEnumerable<Project> GetByEmployeeId(Guid employeeId)
         {
             using (SqlCommand command = _connection.CreateCommand())
             {
@@ -85,16 +85,23 @@ namespace ProjectManager.DAL.Services
                 _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
-                    if (reader.Read())
+                    if (!reader.HasRows)
                     {
-                        return reader.ToProject();
+                        Console.WriteLine("Aucun projet trouvé pour cet employee");
+                        yield break;
                     }
-                    throw new ArgumentOutOfRangeException(nameof(employeeId));
+
+
+                    while (reader.Read())
+                    {
+                        yield return reader.ToProject();
+                    }
+
                 }
             }
         }
 
-        public Project GetByManagerId(Guid managerId)
+        public IEnumerable<Project> GetByManagerId(Guid managerId)
         {
             using (SqlCommand command = _connection.CreateCommand())
             {
@@ -104,11 +111,17 @@ namespace ProjectManager.DAL.Services
                 _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
-                    if (reader.Read())
+                    if (!reader.HasRows)
                     {
-                        return reader.ToProject();
+                        Console.WriteLine("Aucun projet trouvé pour ce manager");
+                        yield break;
                     }
-                    throw new ArgumentOutOfRangeException(nameof(managerId));
+
+
+                    while (reader.Read())
+                    {
+                        yield return reader.ToProject();
+                    }
                 }
             }
         }
@@ -119,7 +132,7 @@ namespace ProjectManager.DAL.Services
             {
                 command.CommandText = "SP_Project_Update";
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue(nameof(id),id );
+                command.Parameters.AddWithValue(nameof(id), id);
                 command.Parameters.AddWithValue(nameof(entity.Description), entity.Description);
 
                 _connection.Open();

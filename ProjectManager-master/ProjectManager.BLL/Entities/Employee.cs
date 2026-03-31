@@ -32,6 +32,7 @@ namespace ProjectManager.BLL.Entities
                 _lastName = value;
             }
         }
+
         public bool IsProjectManager { get; private set; }
         public DateTime HireDate { get; private set; }
         public Employee(string firstName, string lastName, bool isProjectManager, DateTime hireDate)

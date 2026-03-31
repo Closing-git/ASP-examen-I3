@@ -151,11 +151,16 @@ namespace ProjectManager.DAL.Services
                 command.CommandText = "SP_Employee_Get_FromUserId";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(userId), userId);
-                _connection.Open();
+
+                if (_connection.State != ConnectionState.Open)
+                {
+                    _connection.Open();
+                }
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
                     if (reader.Read())
                     {
+
                         return reader.ToEmployee();
                     }
                     throw new ArgumentOutOfRangeException(nameof(userId));

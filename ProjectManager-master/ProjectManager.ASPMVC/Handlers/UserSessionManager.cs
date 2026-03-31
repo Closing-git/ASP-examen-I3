@@ -10,18 +10,6 @@ namespace ProjectManager.ASPMVC.Handlers
             _session = httpContextAccessor.HttpContext.Session;
         }
 
-        public Guid? UserId
-        {
-            get
-            {
-                return JsonSerializer.Deserialize<Guid?>(_session.GetString(nameof(UserId)) ?? "null");
-            }
-            set
-            {
-                if (value is null) _session.Remove(nameof(UserId));
-                else _session.SetString(nameof(UserId), JsonSerializer.Serialize(value));
-            }
-        }
 
         public Guid? EmployeeId
         {
@@ -35,8 +23,11 @@ namespace ProjectManager.ASPMVC.Handlers
                 else _session.SetString(nameof(EmployeeId), JsonSerializer.Serialize(value));
             }
         }
+        public void Clear()
+        {
 
-
+            EmployeeId = null;
+        }
     }
 }
 

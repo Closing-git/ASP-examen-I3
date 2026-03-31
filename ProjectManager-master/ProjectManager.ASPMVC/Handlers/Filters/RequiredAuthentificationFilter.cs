@@ -11,9 +11,9 @@ namespace ProjectManager.ASPMVC.Handlers.Filters
             {
                 ISession session = context.HttpContext.Session;
 
-                Guid? userId = JsonSerializer.Deserialize<Guid?>(session.GetString("UserId") ?? "null");
+                Guid? employeeId = JsonSerializer.Deserialize<Guid?>(session.GetString("EmployeeId") ?? "null");
 
-                if (userId is null)
+                if (employeeId is null)
                 {
                     context.Result = new RedirectToActionResult("Login", "Auth", null);
                 }

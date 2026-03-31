@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using ProjectManager.ASPMVC.Handlers;
 using ProjectManager.Common.Repositories;
 

@@ -13,7 +13,7 @@ namespace ProjectManager.ASPMVC.Handlers.Filters
         }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (_userSession.UserId is not null)
+            if (_userSession.EmployeeId is not null)
             {
                 context.Result = new RedirectToActionResult("Logout", "Auth", null);
             }
