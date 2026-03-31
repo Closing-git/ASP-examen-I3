@@ -21,6 +21,7 @@ namespace ProjectManager.DAL.Services
 
         public Guid Create(Project entity)
         {
+
             using (SqlCommand command = _connection.CreateCommand())
             {
                 try
@@ -55,14 +56,14 @@ namespace ProjectManager.DAL.Services
             throw new NotImplementedException();
         }
 
-        public Project Get(Guid id)
+        public Project Get(Guid projectId)
         {
 
             using (SqlCommand command = _connection.CreateCommand())
             {
-                command.CommandText = "SP_Project_GetById";
+                command.CommandText = "SP_Project_Get_ById";
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue(nameof(id), id);
+                command.Parameters.AddWithValue(nameof(projectId), projectId);
                 _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
@@ -70,7 +71,7 @@ namespace ProjectManager.DAL.Services
                     {
                         return reader.ToProject();
                     }
-                    throw new ArgumentOutOfRangeException(nameof(id));
+                    throw new ArgumentOutOfRangeException(nameof(projectId));
                 }
             }
         }
@@ -82,21 +83,16 @@ namespace ProjectManager.DAL.Services
                 command.CommandText = "SP_Project_Get_FromEmployeeId";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(employeeId), employeeId);
+
                 _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
-                    if (!reader.HasRows)
-                    {
-                        Console.WriteLine("Aucun projet trouvé pour cet employee");
-                        yield break;
-                    }
-
-
+                    var projects = new List<Project>();
                     while (reader.Read())
                     {
-                        yield return reader.ToProject();
+                        projects.Add(reader.ToProject());
                     }
-
+                    return projects; 
                 }
             }
         }
@@ -107,21 +103,16 @@ namespace ProjectManager.DAL.Services
             {
                 command.CommandText = "SP_Project_Get_FromProjectManagerId";
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue(nameof(managerId), managerId);
+                command.Parameters.AddWithValue("projectManagerId", managerId);
                 _connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
-                    if (!reader.HasRows)
-                    {
-                        Console.WriteLine("Aucun projet trouvé pour ce manager");
-                        yield break;
-                    }
-
-
+                    var projects = new List<Project>();
                     while (reader.Read())
                     {
-                        yield return reader.ToProject();
+                        projects.Add(reader.ToProject());
                     }
+                    return projects;
                 }
             }
         }

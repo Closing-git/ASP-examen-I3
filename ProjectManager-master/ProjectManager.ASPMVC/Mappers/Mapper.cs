@@ -13,10 +13,35 @@ namespace ProjectManager.ASPMVC.Mappers
                 ProjectId = entity.ProjectId,
                 Name = entity.Name,
                 Description = entity.Description,
-                
+
             };
         }
-        #endregion
 
+        public static Models.Project.DetailsViewModel ToDetails(this BLL.Entities.Project entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Models.Project.DetailsViewModel()
+            {
+                ProjectId = entity.ProjectId,
+                Name = entity.Name,
+                Description = entity.Description,
+                CreationDate = entity.CreationDate.ToString("d"),
+                ProjectManagerName = "",
+                Team = new List<string>()
+            };
+        }
+
+        public static BLL.Entities.Project ToBLL(this Models.Project.CreateForm entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+            return new BLL.Entities.Project(
+                entity.Name,
+                entity.Description,
+                entity.ProjectManagerId);
+        }
     }
+    #endregion
+
 }
+

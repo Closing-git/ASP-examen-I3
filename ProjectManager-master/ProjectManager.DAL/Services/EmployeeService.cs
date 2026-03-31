@@ -56,9 +56,10 @@ namespace ProjectManager.DAL.Services
                     command.CommandText = "SP_Employee_Check_IsProjectManager";
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue(nameof(employeeId), employeeId);
-
                     _connection.Open();
-                    return employeeId == (Guid)command.ExecuteScalar();
+
+                    object result = command.ExecuteScalar();
+                    return Convert.ToBoolean(result);
                 }
             }
             catch (Exception)
