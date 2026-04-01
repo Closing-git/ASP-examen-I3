@@ -1,4 +1,6 @@
-﻿using ProjectManager.BLL.Entities;
+﻿using ProjectManager.ASPMVC.Models.Employee;
+using ProjectManager.BLL.Entities;
+using ProjectManager.DAL.Entities;
 
 namespace ProjectManager.ASPMVC.Mappers
 {
@@ -28,7 +30,7 @@ namespace ProjectManager.ASPMVC.Mappers
                 Description = entity.Description,
                 CreationDate = entity.CreationDate.ToString("d"),
                 ProjectManagerName = "",
-                Team = new List<string>()
+                TeamMembers = new List<TeamMemberViewModel>()
             };
         }
 
@@ -41,6 +43,29 @@ namespace ProjectManager.ASPMVC.Mappers
                 entity.Description,
                 entity.ProjectManagerId);
         }
+
+        public static BLL.Entities.Project ToBLL(this Models.Project.EditForm entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+            return new BLL.Entities.Project(
+                entity.ProjectName,
+                entity.Description,
+                entity.ManagerId
+                );
+        }
+
+        public static Models.Project.EditForm ToEditDescription(this BLL.Entities.Project entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Models.Project.EditForm
+            {
+                Description = entity.Description,
+                ProjectName = entity.Name,
+                ProjectId = entity.ProjectId
+            };
+        }
+
         #endregion
 
         #region Post
@@ -67,6 +92,20 @@ namespace ProjectManager.ASPMVC.Mappers
                 entity.Content,
                 entity.EmployeeId,
                 entity.ProjectId);
+        }
+
+        #endregion
+
+        #region TeamMember
+
+        public static Models.Employee.TeamMemberViewModel ToTeamMember(this BLL.Entities.Employee entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Models.Employee.TeamMemberViewModel
+            {
+                EmployeeId = entity.EmployeeId,
+                Name = $"{entity.FirstName} {entity.LastName}",
+            };
         }
 
         #endregion

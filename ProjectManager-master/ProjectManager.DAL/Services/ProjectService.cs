@@ -123,7 +123,7 @@ namespace ProjectManager.DAL.Services
             {
                 command.CommandText = "SP_Project_Update";
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue(nameof(id), id);
+                command.Parameters.AddWithValue("projectId", id);
                 command.Parameters.AddWithValue(nameof(entity.Description), entity.Description);
 
                 _connection.Open();

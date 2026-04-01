@@ -60,7 +60,7 @@ namespace ProjectManager.DAL.Services
             throw new NotImplementedException();
         }
 
-        public void SetEnd(Guid employeeId, Guid projectId, DateTime endTime)
+        public void SetEnd(Guid employeeId, Guid projectId, DateTime endDate)
         {
 
             using (SqlCommand command = _connection.CreateCommand())
@@ -69,7 +69,7 @@ namespace ProjectManager.DAL.Services
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(employeeId), employeeId);
                 command.Parameters.AddWithValue(nameof(projectId), projectId);
-                command.Parameters.AddWithValue(nameof(endTime), endTime);
+                command.Parameters.AddWithValue("endDate", endDate);
 
                 _connection.Open();
                 command.ExecuteNonQuery();

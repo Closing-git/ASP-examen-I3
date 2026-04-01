@@ -1,4 +1,6 @@
 ﻿@model ProjectManager.ASPMVC.Models.Project.DetailsViewModel
+@using ProjectManager.ASPMVC.Handlers
+@inject UserSessionManager userSession
 
 @{
     ViewData["Title"] = Model.Name;
@@ -21,6 +23,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
+        @if (userSession.IsProjectManager is not null and true)
+        {
+        <button>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Edit" asp-route-id="@Model.ProjectId">Editer la description</a>
+        </button>
+        }
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreationDate)
         </dt>
@@ -34,13 +42,16 @@
             @Html.DisplayFor(model => model.ProjectManagerName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Team)
+            <p>Membres de l'équipe</p>
         </dt>
         <dd class="col-sm-10">
             <ul>
-            @foreach (var member in Model.Team)
+            @foreach (var member in Model.TeamMembers)
             {
-                    <li>@member</li>
+                    <li>@member.Name</li>
+                    <button>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="RemoveEmployee" asp-route-projectId="@Model.ProjectId"  asp-route-employeeId="@member.EmployeeId">🗑️</a>
+                    </button>
             }
             </ul>
         </dd>
@@ -87,6 +98,6 @@
 
 </div>
 <div>
-    @Html.ActionLink("Modifier la description", "Edit", new { /* id = Model.PrimaryKey */ }) |
+
     <a asp-action="Index">Revenir à la liste</a>
 </div>

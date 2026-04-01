@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using ProjectManager.ASPMVC.Models.Employee;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace ProjectManager.ASPMVC.Models.Project
 {
@@ -19,7 +21,8 @@ namespace ProjectManager.ASPMVC.Models.Project
         [DisplayName("Chef de projet:")]
         public string ProjectManagerName { get; set; }
         [DisplayName("Equipe:")]
-        public IEnumerable<String> Team { get; set; }
+
+        public IEnumerable<TeamMemberViewModel> TeamMembers { get; set; }
 
         public IEnumerable<Post.ListItemViewModel> Posts { get; set; }
 

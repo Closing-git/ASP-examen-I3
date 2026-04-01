@@ -9,7 +9,7 @@
 <h1>Index</h1>
 
 <p>
-    @if (userSession.IsProjectManager is not null or true)
+    @if (userSession.IsProjectManager is not null and true)
     {
         <a asp-action="Create">Créer un nouveau projet</a>
     }
