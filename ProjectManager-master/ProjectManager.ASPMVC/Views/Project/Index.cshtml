@@ -3,15 +3,15 @@
 @model IEnumerable<ProjectManager.ASPMVC.Models.Project.ListItemViewModel>
 
 @{
-    ViewData["Title"] = "Mes projets";
+    ViewData["Title"] = "Les projets";
 }
 
 <h1>Index</h1>
 
 <p>
-    @if(userSession.IsProjectManager is not null or true)
+    @if (userSession.IsProjectManager is not null or true)
     {
-    <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Créer un nouveau projet</a>
     }
 </p>
 <table class="table">
@@ -29,23 +29,22 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.nbMembers)
                 </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ProjectId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ProjectId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
-            </td>
-        </tr>
-}
+                <td>
+                    @Html.ActionLink("Détails", "Details", new { id = item.ProjectId }) |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -3,21 +3,10 @@
 @inject UserSessionManager userSession
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Se connecter";
 }
 
 <h1>SE CONNECTER</h1>
-<p>Utilisateur connecté :  </p>
-@if (userSession.EmployeeId is null)
-{
-    <p>AUCUN</p>
-
-}
-else
-{
-    <p>@userSession.EmployeeId</p>
-}
-
 
 <div class="row">
     <div class="col-md-4">

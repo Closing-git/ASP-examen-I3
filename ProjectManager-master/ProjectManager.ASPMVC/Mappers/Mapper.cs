@@ -41,8 +41,36 @@ namespace ProjectManager.ASPMVC.Mappers
                 entity.Description,
                 entity.ProjectManagerId);
         }
+        #endregion
+
+        #region Post
+        public static Models.Post.ListItemViewModel ToListItem(this BLL.Entities.Post entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            return new Models.Post.ListItemViewModel()
+            {
+                PostId = entity.PostId,
+                Subject = entity.Subject,
+                Content = entity.Content,
+                EmployeeId = entity.EmployeeId,
+                SendDate = entity.SendDate,
+                ProjectId = entity.ProjectId
+            };
+        }
+
+        public static BLL.Entities.Post ToBLL(this Models.Post.CreateForm entity)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+            return new BLL.Entities.Post(
+                entity.Subject,
+                entity.Content,
+                entity.EmployeeId,
+                entity.ProjectId);
+        }
+
+        #endregion
     }
-    #endregion
 
 }
 

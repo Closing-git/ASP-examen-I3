@@ -1,13 +1,12 @@
 ﻿@model ProjectManager.ASPMVC.Models.Project.DetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Name;
 }
 
-<h1>Details</h1>
+<h1>@Model.Name</h1>
 
 <div>
-    <h4>DetailsViewModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -46,8 +45,11 @@
             </ul>
         </dd>
     </dl>
+    <div>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Create" asp-route-id="@Model.ProjectId">Ecrire un nouveau post</a>
+    </div>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Modifier la description", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Revenir à la liste</a>
 </div>

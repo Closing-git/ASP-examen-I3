@@ -33,7 +33,10 @@ namespace ProjectManager.DAL.Services
                     command.Parameters.AddWithValue(nameof(Post.Subject), entity.Subject);
                     command.Parameters.AddWithValue(nameof(Post.Content), entity.Content);
 
-                    _connection.Open();
+                    if (_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
                     return (Guid)command.ExecuteScalar();
                 }
                 catch (Exception ex)
