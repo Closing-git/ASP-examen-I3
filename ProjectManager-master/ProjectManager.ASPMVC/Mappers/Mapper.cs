@@ -105,6 +105,8 @@ namespace ProjectManager.ASPMVC.Mappers
             {
                 EmployeeId = entity.EmployeeId,
                 Name = $"{entity.FirstName} {entity.LastName}",
+                Email = ""
+
             };
         }
 

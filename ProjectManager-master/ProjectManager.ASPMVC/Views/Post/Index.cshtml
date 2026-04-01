@@ -24,9 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProjectName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AuthorEmail)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -40,17 +38,15 @@
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AuthorName)
+                    <a href="mailto:@item.AuthorEmail">
+                        @item.AuthorName</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SendDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
+                <a asp-action="Details" asp-controller="Project" asp-route-id="@item.ProjectId">@item.ProjectName</a>
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AuthorEmail)
-                </td>
         </tr>
 }
     </tbody>

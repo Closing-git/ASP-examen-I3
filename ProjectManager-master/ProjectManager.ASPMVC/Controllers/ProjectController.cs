@@ -133,9 +133,15 @@ namespace ProjectManager.ASPMVC.Controllers
             }
 
             model.ProjectManagerName = $"{_employeeService.Get(model.ManagerId).FirstName} {_employeeService.Get(model.ManagerId).LastName}";
+            // J'ai modifié la SP_Employee_GetFromProjectId reliée à GetByProjectId afin d'obtenir les employees actifs (et non pas tout ceux ayant participé à un moment)
             model.TeamMembers = _employeeService.GetByProjectId(id)
                 .Select(e => e.ToTeamMember())
-            ;
+                .ToList();
+            foreach (TeamMemberViewModel member in model.TeamMembers)
+            {
+                member.Email = _userService.GetFromEmployeeId(member.EmployeeId).Email;
+            }
+          
             model.Posts = postsWithData;
             return View(model);
         }
@@ -177,6 +183,9 @@ namespace ProjectManager.ASPMVC.Controllers
         [TypeFilter<ProjectManagerFilter>]
         public IActionResult RemoveEmployee(Guid projectId, Guid employeeId)
         {
+            string projectName = _bllService.Get(projectId).Name;
+            string employeeName = $"{_employeeService.Get(employeeId).LastName} {_employeeService.Get(employeeId).FirstName} ";
+
 
             RemoveEmployeeForm removeForm = new RemoveEmployeeForm
             {
@@ -184,6 +193,8 @@ namespace ProjectManager.ASPMVC.Controllers
                 EmployeeId = employeeId
             };
 
+            ViewBag.ProjectName = projectName;
+            ViewBag.EmployeeName = employeeName;
             return View(removeForm);
         }
 

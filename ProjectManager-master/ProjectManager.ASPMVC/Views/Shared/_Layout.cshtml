@@ -35,6 +35,12 @@
                         else
                         {
                             <p>Connecté en tant que @userSession.UserName</p>
+                            @if (@userSession.IsProjectManager is not null and true)
+                            {
+                                <li>
+                                    <a asp-action="Create" asp-controller="Project">Créer un nouveau projet</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Les projets</a>
                             </li>

@@ -33,7 +33,10 @@ namespace ProjectManager.DAL.Services
                     command.Parameters.AddWithValue(nameof(employeeId), employeeId);
                     command.Parameters.AddWithValue(nameof(projectId), projectId);
 
-                    _connection.Open();
+                    if (_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
                     return employeeId == (Guid)command.ExecuteScalar();
                 }
             }
@@ -56,7 +59,10 @@ namespace ProjectManager.DAL.Services
                     command.CommandText = "SP_Employee_Check_IsProjectManager";
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue(nameof(employeeId), employeeId);
-                    _connection.Open();
+                    if (_connection.State != ConnectionState.Open)
+                    {
+                        _connection.Open();
+                    }
 
                     object result = command.ExecuteScalar();
                     return Convert.ToBoolean(result);
@@ -136,7 +142,11 @@ namespace ProjectManager.DAL.Services
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue(nameof(projectId), projectId);
 
-                _connection.Open();
+
+                if (_connection.State != ConnectionState.Open)
+                {
+                    _connection.Open();
+                }
                 using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
                 {
                     while (reader.Read())
@@ -144,7 +154,7 @@ namespace ProjectManager.DAL.Services
                         yield return reader.ToEmployee();
                     }
                 }
-                _connection.Close();
+                
             }
         }
 
