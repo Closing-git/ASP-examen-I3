@@ -121,7 +121,7 @@ namespace ProjectManager.ASPMVC.Controllers
                 if (!ModelState.IsValid) throw new InvalidOperationException("Le formulaire n'est pas valide.");
                 Guid postId = _bllService.Create(form.ToBLL());
 
-                return RedirectToAction(nameof(Index), "Post");
+                return RedirectToAction(nameof(Details), "Project", new { id = form.ProjectId });
             }
             catch
             {

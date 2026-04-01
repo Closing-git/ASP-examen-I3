@@ -45,9 +45,46 @@
             </ul>
         </dd>
     </dl>
-    <div>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Create" asp-route-id="@Model.ProjectId">Ecrire un nouveau post</a>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        Posts du projet
+                    </h4>
+                    <button>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Create" asp-route-id="@Model.ProjectId">Ecrire un nouveau post</a>
+                    </button>
+                </div>
+                <div class="card-body">
+                    @if (Model.Posts is not null)
+                    {
+                        <div class="timeline">
+                            @foreach (var post in Model.Posts)
+                            {
+                                <div class="timeline-item mb-4">
+                                    <div class="timeline-header d-flex justify-content-between">
+                                        <div>
+                                            <strong>@post.AuthorName</strong>
+                                            <small class="text-muted ms-2">@post.AuthorEmail</small>
+                                        </div>
+                                        <small class="text-muted">@post.SendDate.ToString("dd/MM/yyyy HH:mm")</small>
+                                    </div>
+                                    <div class="timeline-content mt-2">
+                                        <h6>@post.Subject</h6>
+                                        <p class="mb-0">@post.Content</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
 </div>
 <div>
     @Html.ActionLink("Modifier la description", "Edit", new { /* id = Model.PrimaryKey */ }) |

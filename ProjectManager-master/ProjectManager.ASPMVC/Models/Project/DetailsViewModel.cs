@@ -21,5 +21,8 @@ namespace ProjectManager.ASPMVC.Models.Project
         [DisplayName("Equipe:")]
         public IEnumerable<String> Team { get; set; }
 
+        public IEnumerable<Post.ListItemViewModel> Posts { get; set; }
+
+
     }
 }

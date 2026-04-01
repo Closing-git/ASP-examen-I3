@@ -14,13 +14,21 @@ namespace ProjectManager.ASPMVC.Controllers
         #region Constructor
         private readonly IProjectRepository<BLL.Entities.Project> _bllService;
         private readonly IEmployeeRepository<BLL.Entities.Employee> _employeeService;
+        private readonly IPostRepository<BLL.Entities.Post> _postService;
+        private readonly IUserRepository<BLL.Entities.User> _userService;
         private readonly UserSessionManager _userSession;
 
-        public ProjectController(IProjectRepository<BLL.Entities.Project> bllService, UserSessionManager userSession, IEmployeeRepository<Employee> employeeService)
+        public ProjectController(IProjectRepository<BLL.Entities.Project> bllService,
+            UserSessionManager userSession,
+            IEmployeeRepository<Employee> employeeService,
+            IPostRepository<Post> postService,
+            IUserRepository<User> userService)
         {
             _bllService = bllService;
             _userSession = userSession;
             _employeeService = employeeService;
+            _postService = postService;
+            _userService = userService;
         }
         #endregion
 
@@ -94,8 +102,35 @@ namespace ProjectManager.ASPMVC.Controllers
         public IActionResult Details(Guid id)
         {
             DetailsViewModel model = _bllService.Get(id).ToDetails();
+            IEnumerable<Models.Post.ListItemViewModel> posts = _postService.GetByProjectId(id)
+                .OrderByDescending(post => post.SendDate)
+                .Select(post => post.ToListItem());
+
+            List<Models.Post.ListItemViewModel> postsWithData = new List<Models.Post.ListItemViewModel>();
+
+            foreach (Models.Post.ListItemViewModel post in posts)
+            {
+                Employee author = _employeeService.Get(post.EmployeeId);
+                string authorName = $"{author.FirstName} {author.LastName}";
+
+                User authorUser = _userService.GetFromEmployeeId(post.EmployeeId);
+                string authorEmail = authorUser.Email;
+
+                postsWithData.Add(new Models.Post.ListItemViewModel
+                {
+                    PostId = post.PostId,
+                    Subject = post.Subject,
+                    Content = post.Content,
+                    EmployeeId = post.EmployeeId,
+                    SendDate = post.SendDate,
+                    AuthorName = authorName,
+                    AuthorEmail = authorEmail,
+                });
+            }
+
             model.ProjectManagerName = $"{_employeeService.Get(model.ManagerId).FirstName} {_employeeService.Get(model.ManagerId).LastName}";
             model.Team = _employeeService.GetByProjectId(id).Select(e => $"{e.FirstName} {e.LastName}");
+            model.Posts = postsWithData;
             return View(model);
         }
 
