@@ -23,7 +23,7 @@ namespace ProjectManager.ASPMVC.Controllers
         public PostController(IPostRepository<BLL.Entities.Post> bllService,
             UserSessionManager userSession,
             IProjectRepository<BLL.Entities.Project> projectRepository,
-            IEmployeeRepository <BLL.Entities.Employee> employeeRepository,
+            IEmployeeRepository<BLL.Entities.Employee> employeeRepository,
             IUserRepository<User> userService)
         {
             _bllService = bllService;
@@ -42,13 +42,25 @@ namespace ProjectManager.ASPMVC.Controllers
         public IActionResult Index()
         {
             Guid employeeId = _userSession.EmployeeId.Value;
+            IEnumerable<Post> posts;
 
-            var posts = _projectService
-                .GetByEmployeeId(employeeId)
-                .SelectMany(project => _bllService.GetWorkingOnProject(project.ProjectId, employeeId))
-                .OrderByDescending(project => project.SendDate)
-                .Select(post => post.ToListItem())
-                ;
+
+            IEnumerable<Project> projects = _projectService.GetByEmployeeId(employeeId);
+
+            if (_employeeService.CheckIsProjectManager(employeeId))
+            {
+                IEnumerable<Project> managedProjects = _projectService.GetByManagerId(employeeId);
+                posts = managedProjects
+            .SelectMany(project => _bllService.GetByProjectId(project.ProjectId))
+            .OrderByDescending(p => p.SendDate);
+            }
+            else
+            {
+                posts = projects
+                    .SelectMany(project => _bllService.GetWorkingOnProject(project.ProjectId, employeeId))
+                    .OrderByDescending(post => post.SendDate);
+
+            }
 
             var model = new List<Models.Post.ListItemViewModel>();
 
@@ -91,8 +103,8 @@ namespace ProjectManager.ASPMVC.Controllers
         {
             Models.Post.CreateForm createForm = new Models.Post.CreateForm
             {
-                ProjectId = id, 
-                EmployeeId = _userSession.EmployeeId.Value 
+                ProjectId = id,
+                EmployeeId = _userSession.EmployeeId.Value
             };
 
             return View(createForm);
